@@ -1,0 +1,17 @@
+dbmaster:
+   build: ./dbmaster
+   ports:
+      - "3306:3306"
+dbslave:
+   build: ./dbslave
+   ports:
+      - "3307:3307"
+   links:
+      - dbmaster:dbmaster
+hub:
+   build: ./hub
+   links:
+      - dbmaster:dbmaster
+      - dbslave:dbslave
+   volumes:
+      - /tmp/output:/output

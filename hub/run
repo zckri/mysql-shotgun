@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+sleep 10
+
+echo "SHOW MASTER STATUS;" | mysql -u root -h dbmaster -pmasterpass12 | awk '(NR==2){print $1;}' > /output/master_file.out
+echo "SHOW MASTER STATUS;" | mysql -u root -h dbmaster -pmasterpass12 | awk '(NR==2){print $2;}' > /output/master_pos.out
+
+myfile=`cat /output/master_file.out`
+mypos=`cat /output/master_pos.out`
+
+echo "CHANGE MASTER TO MASTER_HOST='dbmaster',MASTER_USER='root',MASTER_PASSWORD='masterpass12',MASTER_LOG_FILE='$myfile',MASTER_LOG_POS=$mypos;START SLAVE;" | mysql -u root -h dbslave -P 3307 -pmasterpass12
+echo "+ REPLICATION SUCCESSFULL";
+echo "SHOW slave STATUS;" | mysql -u root -P 3307 -h dbslave -pmasterpass12 > /output/slave_status.out
