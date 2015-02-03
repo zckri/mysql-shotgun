@@ -17,3 +17,7 @@ $ fig up
 - creditentials: root/masterpass12
 
 *see [this](https://github.com/zckri/mysql-shotgun/blob/master/dbmaster/run) and [also this](https://github.com/zckri/mysql-shotgun/blob/master/dbslave/run) to change your creditentials*
+
+cheers,
+
+zckri
